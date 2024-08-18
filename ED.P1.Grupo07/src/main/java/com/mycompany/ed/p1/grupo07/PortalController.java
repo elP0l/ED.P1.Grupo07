@@ -13,6 +13,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -21,6 +23,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+
 
 /**
  * FXML Controller class
@@ -52,6 +58,13 @@ public class PortalController implements Initializable {
         imageView.setFitHeight(newVal.doubleValue());});
         fondo.getChildren().add(imageView);
         imageView.toBack(); 
+       MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource("/images/audio2.mp3").toExternalForm()));
+       mediaPlayer.play();
+       Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30), event -> {
+           mediaPlayer.stop();
+       }));
+       timeline.setCycleCount(1); 
+       timeline.play();
 }
     @FXML
     private void agregarArchivo() throws IOException{
