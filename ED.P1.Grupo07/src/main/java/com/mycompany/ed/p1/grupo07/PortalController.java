@@ -1,25 +1,44 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ */
 package com.mycompany.ed.p1.grupo07;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class PortalController {
-
-//    @FXML
+/**
+ * FXML Controller class
+ *
+ * @author vecto
+ */
+public class PortalController implements Initializable {
+    //    @FXML
 //    private void switchToSecondary() throws IOException {
 //    }
     @FXML
     private Button btAdd;
     @FXML
     private AnchorPane fondo;
+
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
     @FXML
     private void agregarArchivo() throws IOException{
         FileChooser fileChooser = new FileChooser();
