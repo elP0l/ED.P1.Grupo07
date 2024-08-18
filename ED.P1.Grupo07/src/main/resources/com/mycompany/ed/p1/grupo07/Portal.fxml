@@ -13,7 +13,7 @@
          <children>
             <ImageView fitHeight="130.0" fitWidth="153.0" layoutX="133.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../images/portada.png" />
+                  <Image url="@../../../../../images/portada.png" />
                </image>
             </ImageView>
             <Label layoutX="75.0" layoutY="207.0" prefHeight="34.0" prefWidth="249.0" text="ANIMAL GUESSER ¿?" textAlignment="CENTER" textFill="WHITE">
