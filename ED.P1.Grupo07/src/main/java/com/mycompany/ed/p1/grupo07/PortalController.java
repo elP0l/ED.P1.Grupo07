@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -37,8 +39,18 @@ public class PortalController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        Image gifImage = new Image(getClass().getResourceAsStream("/images/gif2.gif"));
+        ImageView imageView = new ImageView(gifImage);
+        imageView.setFitWidth(fondo.getWidth());
+        imageView.setFitHeight(fondo.getHeight());
+        imageView.setPreserveRatio(false); 
+        fondo.widthProperty().addListener((obs, oldVal, newVal) -> {
+        imageView.setFitWidth(newVal.doubleValue());});
+        fondo.heightProperty().addListener((obs, oldVal, newVal) -> {
+        imageView.setFitHeight(newVal.doubleValue());});
+        fondo.getChildren().add(imageView);
+        imageView.toBack(); 
+}
     @FXML
     private void agregarArchivo() throws IOException{
         FileChooser fileChooser = new FileChooser();

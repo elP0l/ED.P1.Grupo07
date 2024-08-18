@@ -11,6 +11,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -21,14 +24,26 @@ public class AdivinaController implements Initializable {
 
     @FXML
     private Button btAdd;
+    @FXML
+    private AnchorPane fondo;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        Image gifImage = new Image(getClass().getResourceAsStream("/images/gif3.gif"));
+        ImageView imageView = new ImageView(gifImage);
+        imageView.setFitWidth(fondo.getWidth());
+        imageView.setFitHeight(fondo.getHeight());
+        imageView.setPreserveRatio(false); 
+        fondo.widthProperty().addListener((obs, oldVal, newVal) -> {
+        imageView.setFitWidth(newVal.doubleValue());});
+        fondo.heightProperty().addListener((obs, oldVal, newVal) -> {
+        imageView.setFitHeight(newVal.doubleValue());});
+        fondo.getChildren().add(imageView);
+        imageView.toBack(); 
+    }
 
     @FXML
     private void agregarArchivo(ActionEvent event) {
@@ -37,7 +52,6 @@ public class AdivinaController implements Initializable {
     @FXML
     private void adivinar(ActionEvent event) {
     }
-    @FXML
     private void switchToPrimary() throws IOException {
         App.setRoot("Portal");
     }
