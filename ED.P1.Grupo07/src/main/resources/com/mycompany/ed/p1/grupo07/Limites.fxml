@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed.p1.grupo07.LimitesController">
+   <children>
+      <AnchorPane fx:id="root" prefHeight="408.0" prefWidth="405.0" style="-fx-background-color: black;">
+         <children>
+            <ImageView fitHeight="130.0" fitWidth="153.0" layoutX="135.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../images/portada.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblPregunta" layoutX="43.0" layoutY="221.0" prefHeight="90.0" prefWidth="314.0" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Ink Free" size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblPiense" layoutX="43.0" layoutY="171.0" prefHeight="50.0" prefWidth="314.0" text="Piense en un animal..." textAlignment="CENTER" textFill="#ca170f">
+               <font>
+                  <Font name="Ink Free" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblListo" layoutX="105.0" layoutY="320.0" prefHeight="50.0" prefWidth="108.0" textAlignment="CENTER" textFill="#ca170f">
+               <font>
+                  <Font name="Ink Free" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

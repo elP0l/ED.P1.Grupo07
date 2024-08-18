@@ -103,7 +103,7 @@ public class PortalController implements Initializable {
         
         
         
-        App.setRoot("Adivina");
+        App.setRoot("Limites");
     }
     
     @FXML
@@ -112,7 +112,7 @@ public class PortalController implements Initializable {
         String archivoRespuestas = App.pathFiles+App.nameFileAnswers;
         App.game.cargarArbol(archivoPreguntas);
         App.game.cargarRespuestas(archivoRespuestas);
-        App.setRoot("Adivina");
+        App.setRoot("Limites");
     }
     
 }

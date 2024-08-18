@@ -5,8 +5,7 @@
 package com.mycompany.ed.p1.grupo07;
 
 import Clases.Pregunta;
-import TDA.BinaryTree;
-import TDA.NodeBinaryTree;
+import TDA.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,7 +40,8 @@ public class AdivinaController implements Initializable {
     private Label lblQuestion;
     @FXML
     private Label lblSimbol;
-    
+    @FXML
+    public int nivel;
     @FXML
     BinaryTree<Pregunta> bTree = App.game.getDecisionTree();
     @FXML
@@ -64,8 +64,10 @@ public class AdivinaController implements Initializable {
         fondo.getChildren().add(imageView);
         imageView.toBack(); 
         Musica();
-       NodeBinaryTree<Pregunta> node = bTree.getRoot();
-       lblQuestion.setText(App.game.mostrarPregunta(node));
+        NodeBinaryTree<Pregunta> node = bTree.getRoot();
+        nivel = bTree.countLevelsRecursive();
+        System.out.println(nivel);
+        lblQuestion.setText(App.game.mostrarPregunta(node));
         
     }
     public void Musica(){
@@ -79,10 +81,8 @@ public class AdivinaController implements Initializable {
     }
     @FXML
     private void opIzq(ActionEvent event) throws IOException {
-        Musica();
         key+="sí ";
-        if(bTree.getRoot().getLeft()==null){
-             
+        if((bTree.getRoot().getLeft()==null) || (Integer.valueOf(LimitesController.num)>=nivel)){
             System.out.println(key);
             switchToPrimary();
         }else{
@@ -96,7 +96,7 @@ public class AdivinaController implements Initializable {
     @FXML
     private void opDer(ActionEvent event) throws IOException {
         key+="no ";
-        if(bTree.getRoot().getRight()==null){
+        if((bTree.getRoot().getRight()==null) || (Integer.valueOf(LimitesController.num)>=nivel)){
             System.out.println(key);
             switchToPrimary();
         }else{
