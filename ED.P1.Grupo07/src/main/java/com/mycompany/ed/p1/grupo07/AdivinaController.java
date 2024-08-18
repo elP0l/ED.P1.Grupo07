@@ -63,6 +63,7 @@ public class AdivinaController implements Initializable {
         imageView.setFitHeight(newVal.doubleValue());});
         fondo.getChildren().add(imageView);
         imageView.toBack(); 
+<<<<<<< HEAD
 
         
         NodeBinaryTree<Pregunta> node = bTree.getRoot();
@@ -78,6 +79,18 @@ public class AdivinaController implements Initializable {
     }
 
 
+=======
+        NodeBinaryTree<Pregunta> node = bTree.getRoot();
+        lblQuestion.setText(App.game.mostrarPregunta(node));   
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource("/images/audio1.mp3").toExternalForm()));
+       mediaPlayer.play();
+       Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30), event -> {
+           mediaPlayer.stop();
+       }));
+       timeline.setCycleCount(1); 
+       timeline.play();
+}
+>>>>>>> 2ec86ce2fd88ee704f28c417298fa9ce026308ae
     @FXML
     private void opIzq(ActionEvent event) throws IOException {
         key+="sí ";
