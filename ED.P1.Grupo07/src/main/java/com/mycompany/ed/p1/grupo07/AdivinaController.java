@@ -63,12 +63,12 @@ public class AdivinaController implements Initializable {
         imageView.setFitHeight(newVal.doubleValue());});
         fondo.getChildren().add(imageView);
         imageView.toBack(); 
-<<<<<<< HEAD
-
+        Musica();
+       NodeBinaryTree<Pregunta> node = bTree.getRoot();
+       lblQuestion.setText(App.game.mostrarPregunta(node));
         
-        NodeBinaryTree<Pregunta> node = bTree.getRoot();
-        lblQuestion.setText(App.game.mostrarPregunta(node));
-        
+    }
+    public void Musica(){
         MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource("/images/audio1.mp3").toExternalForm()));
         mediaPlayer.play();
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30), event -> {
@@ -77,27 +77,16 @@ public class AdivinaController implements Initializable {
         timeline.setCycleCount(1); 
         timeline.play();
     }
-
-
-=======
-        NodeBinaryTree<Pregunta> node = bTree.getRoot();
-        lblQuestion.setText(App.game.mostrarPregunta(node));   
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource("/images/audio1.mp3").toExternalForm()));
-       mediaPlayer.play();
-       Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30), event -> {
-           mediaPlayer.stop();
-       }));
-       timeline.setCycleCount(1); 
-       timeline.play();
-}
->>>>>>> 2ec86ce2fd88ee704f28c417298fa9ce026308ae
     @FXML
     private void opIzq(ActionEvent event) throws IOException {
+        Musica();
         key+="sí ";
         if(bTree.getRoot().getLeft()==null){
+             
             System.out.println(key);
             switchToPrimary();
         }else{
+            Musica();
             bTree = bTree.getRoot().getLeft();
             NodeBinaryTree<Pregunta> node = bTree.getRoot();
             lblQuestion.setText(App.game.mostrarPregunta(node));
@@ -111,6 +100,7 @@ public class AdivinaController implements Initializable {
             System.out.println(key);
             switchToPrimary();
         }else{
+            Musica();
             bTree = bTree.getRoot().getRight();
             NodeBinaryTree<Pregunta> node = bTree.getRoot();
             lblQuestion.setText(App.game.mostrarPregunta(node));
