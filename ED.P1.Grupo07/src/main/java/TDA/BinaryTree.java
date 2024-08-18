@@ -25,22 +25,11 @@ public class BinaryTree <E> {
     }
     
     public void recorrerPreorden(){
-        
-        // 1. Imprimir a la raiz
-        // 2. recorrer preorden en hijo izquierdo
-        // 3. recorrer preorden en hijo derecho        
-        
         if (!this.isEmpty()) {
-            
-            // 1. Imprimir a la raiz
             System.out.println(this.root.getContent());
-            
-            // 2. recorrer preorden en hijo izquierdo
             if (root.getLeft()!=null) {
                 root.getLeft().recorrerPreorden(); 
             }
-        
-            // 3. recorrer preorden en hijo derecho
             if (root.getRight()!=null) {
                 root.getRight().recorrerPreorden(); 
             }
@@ -48,20 +37,13 @@ public class BinaryTree <E> {
     }
     
     public void recorrerPostorden(){
-        
         if (!this.isEmpty()){
-            
-            // 1. recorrer postorden en hijo izquierdo
             if (root.getLeft()!=null){
                 root.getLeft().recorrerPostorden(); 
             }
-        
-            // 2. recorrer postorden en hijo derecho
             if (root.getRight()!=null){
                 root.getRight().recorrerPostorden(); 
             }
-            
-            // 3. Imprimir a la raiz
             System.out.println(this.root.getContent());
         }
     }
@@ -69,16 +51,10 @@ public class BinaryTree <E> {
     public void recorrerEnorden(){
         
         if (!this.isEmpty()){
-            
-            // 1. recorrer enorden en hijo izquierdo
             if (root.getLeft()!=null){
                 root.getLeft().recorrerEnorden(); 
             }
-        
-            // 2. Imprimir a la raiz
             System.out.println(this.root.getContent());
-            
-            // 3. recorrer enorden en hijo derecho
             if (root.getRight()!=null){
                 root.getRight().recorrerEnorden(); 
             }
@@ -91,10 +67,8 @@ public class BinaryTree <E> {
     }
     
     public boolean isLeaf(){
-        // root no esta vacio
         if (!this.isEmpty()){
             return root.getLeft() == null && root.getRight() == null;
-            // return root.getLeft().isEmpty() && root.getRight().isEmpty();
         }
         return false;
     }
@@ -106,8 +80,6 @@ public class BinaryTree <E> {
     public void setRoot(NodeBinaryTree<E> root) {
         this.root = root;
     }
-    
-    //METODO 1 TAREA
     public int countDescendantsRecursive(){
         if(!this.isEmpty()){
             int lDescendants = 0;
@@ -144,8 +116,6 @@ public class BinaryTree <E> {
             return 0;
         }
     }
-    
-    //METODO 2 TAREA
     public NodeBinaryTree findParentRecursive(NodeBinaryTree rootsito,NodeBinaryTree nodoBuscado){
         
         if (rootsito == null || rootsito == nodoBuscado) {
@@ -190,14 +160,13 @@ public class BinaryTree <E> {
         }
         return null;
     }
-    //METODO 3
     public int countLevelsRecursive(){
         
         if (this.isEmpty()) {
             return 0;
         }
         if (this.getRoot().getLeft()==null || this.getRoot().getRight()==null) {
-            return 1; // Si el nodo es una hoja, hay un nivel
+            return 1;
         }
         int leftLevels = this.getRoot().getLeft().countLevelsRecursive();
         int rightLevels = this.getRoot().getRight().countLevelsRecursive();
@@ -228,9 +197,6 @@ public class BinaryTree <E> {
 
         return levels;
     }
-    
-    
-    //METODO 4
     public boolean isLeftyRecursive() {
         if (this == null) {
             return true;
@@ -241,10 +207,8 @@ public class BinaryTree <E> {
         if (root.getLeft() == null) {
             return false;
         }
-
         boolean left = root.getLeft().isLeftyRecursive();
-        boolean right = true; // Asumimos true por defecto si el hijo derecho es nulo
-
+        boolean right = true;
         if (root.getRight() != null) {
             right = root.getRight().isLeftyRecursive();
         }
@@ -296,9 +260,6 @@ public class BinaryTree <E> {
         }
         return izq > dere;
     }
-
-    
-    //METODO 5
     public boolean isIdenticalRecursive(NodeBinaryTree<E> node1, NodeBinaryTree<E> node2) {
         if (node1 == null && node2 == null) {
             return true;
@@ -373,9 +334,6 @@ public class BinaryTree <E> {
        }
        return s1.isEmpty() && s2.isEmpty();
     }
-    
-    
-    //METODO 6
     public String largestValueOfEachLevelRecursive(){
         if (!this.isEmpty()) {
             if (this.isLeaf()) {
@@ -438,9 +396,6 @@ public class BinaryTree <E> {
         }
         return levels;
     }
-    
-    
-    //METODO 7
     public int countNodesWithOnlyChildRecursive(NodeBinaryTree<E> node) {
         if (node == null) {
             return 0;
@@ -478,9 +433,6 @@ public class BinaryTree <E> {
         }
         return count;
     }
-    
-    
-    //METODO 8
     public boolean isHeightBalancedRecursive() {
         if (this.isEmpty()) return true; 
         boolean leftBalanced = (this.root.getLeft() == null) || this.root.getLeft().isHeightBalancedRecursive();
@@ -522,13 +474,11 @@ public class BinaryTree <E> {
         }
         return true;
     }
-    
     @Override
     public int hashCode() {
         int hash = 7;
         return hash;
     }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

@@ -17,9 +17,6 @@ public class NodeBinaryTree<E> {
         this.content = content;
         this.left=null;
         this.right=null;
-        
-        // this.left = new BinaryTree<>();
-        // this.right = new BinaryTree<>();
     }
 
     public E getContent() {
