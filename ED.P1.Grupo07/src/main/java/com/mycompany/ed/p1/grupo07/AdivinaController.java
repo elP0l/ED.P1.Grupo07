@@ -63,22 +63,20 @@ public class AdivinaController implements Initializable {
         imageView.setFitHeight(newVal.doubleValue());});
         fondo.getChildren().add(imageView);
         imageView.toBack(); 
-<<<<<<< HEAD
+
         
         NodeBinaryTree<Pregunta> node = bTree.getRoot();
         lblQuestion.setText(App.game.mostrarPregunta(node));
         
-    }
-=======
         MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource("/images/audio1.mp3").toExternalForm()));
-       mediaPlayer.play();
-       Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30), event -> {
-           mediaPlayer.stop();
-       }));
-       timeline.setCycleCount(1); 
-       timeline.play();
-}
->>>>>>> 4a6ad27638ca1dc33ecae559402823081f81b765
+        mediaPlayer.play();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30), event -> {
+        mediaPlayer.stop();
+        }));
+        timeline.setCycleCount(1); 
+        timeline.play();
+    }
+
 
     @FXML
     private void opIzq(ActionEvent event) throws IOException {

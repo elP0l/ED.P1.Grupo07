@@ -58,9 +58,9 @@ public class PortalController implements Initializable {
         imageView.setFitHeight(newVal.doubleValue());});
         fondo.getChildren().add(imageView);
         imageView.toBack(); 
-       MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource("/images/audio2.mp3").toExternalForm()));
-       mediaPlayer.play();
-       Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30), event -> {
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource("/images/audio2.mp3").toExternalForm()));
+        mediaPlayer.play();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30), event -> {
            mediaPlayer.stop();
        }));
        timeline.setCycleCount(1); 
