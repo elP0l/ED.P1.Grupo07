@@ -10,6 +10,7 @@
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
     <dependencies>
+        <!-- Dependencias JavaFX -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -18,6 +19,11 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
+            <version>13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
             <version>13</version>
         </dependency>
     </dependencies>
@@ -40,8 +46,8 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running -->
-                        <!-- Usage: mvn clean javafx:run -->
+                        <!-- Configuración por defecto para ejecutar -->
+                        <!-- Uso: mvn clean javafx:run -->
                         <id>default-cli</id>
                     </execution>
                 </executions>

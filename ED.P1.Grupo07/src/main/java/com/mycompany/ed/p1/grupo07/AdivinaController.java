@@ -7,6 +7,8 @@ package com.mycompany.ed.p1.grupo07;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +16,9 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -43,7 +48,14 @@ public class AdivinaController implements Initializable {
         imageView.setFitHeight(newVal.doubleValue());});
         fondo.getChildren().add(imageView);
         imageView.toBack(); 
-    }
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource("/images/audio1.mp3").toExternalForm()));
+       mediaPlayer.play();
+       Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30), event -> {
+           mediaPlayer.stop();
+       }));
+       timeline.setCycleCount(1); 
+       timeline.play();
+}
 
     @FXML
     private void agregarArchivo(ActionEvent event) {
