@@ -8,7 +8,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  *
@@ -16,8 +17,8 @@ import java.util.Stack;
  */
 public class Util {
     
-    public static Stack<String> leerArchivo(String archivo){
-        Stack<String> pila = new Stack<>();
+    public static Queue<String> leerArchivo(String archivo){
+        Queue<String> cola = new LinkedList<>();
         FileReader fR;
         BufferedReader bR;
         try{
@@ -26,7 +27,7 @@ public class Util {
             
             String line;
             while((line=bR.readLine())!=null){
-                pila.push(line.trim());
+                cola.offer(line.trim());
             }
             
             System.out.println("El archivo ha sido totalmente leido...");
@@ -37,7 +38,7 @@ public class Util {
             System.out.println("Ocurrió un error al leer el archivo...");
         }
         
-        return pila;
+        return cola;
     }
     
 }

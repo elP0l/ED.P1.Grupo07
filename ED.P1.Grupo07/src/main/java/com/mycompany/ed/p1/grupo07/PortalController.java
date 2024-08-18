@@ -10,6 +10,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,24 +55,40 @@ public class PortalController implements Initializable {
 }
     @FXML
     private void agregarArchivo() throws IOException{
-        FileChooser fileChooser = new FileChooser();
         
-        FileChooser.ExtensionFilter filtro = new FileChooser.ExtensionFilter("Archivos de Texto", "*.txt");
-        fileChooser.getExtensionFilters().add(filtro);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar Archivos");
+        
+        List<File> archivosSeleccionados = fileChooser.showOpenMultipleDialog((Stage) btAdd.getScene().getWindow());
 
-        File archivoSeleccionado = fileChooser.showOpenDialog((Stage) btAdd.getScene().getWindow());
-
-        if (archivoSeleccionado != null) {
-            Path destino = Paths.get(App.pathFiles, archivoSeleccionado.getName());
-            try {
-                Files.copy(archivoSeleccionado.toPath(), destino);
-                System.out.println("Archivo guardado en: " + destino.toString());
-            } catch (IOException e) {
-                System.err.println("Error al guardar el archivo: " + e.getMessage());
+        if (archivosSeleccionados != null && !archivosSeleccionados.isEmpty()) {
+            for (File archivo : archivosSeleccionados) {
+                try {
+                    String nombreArchivo = archivo.getName();
+                    
+                    if (nombreArchivo.equals("preguntas.txt") || nombreArchivo.equals("questions.txt")){
+                        App.nameFileQuestions = nombreArchivo;
+                        String archivoPreguntas = App.pathFiles+App.nameFileQuestions;
+                        App.game.cargarArbol(archivoPreguntas);
+                    }else{
+                        App.nameFileAnswers = nombreArchivo;
+                        String archivoRespuestas = App.pathFiles+App.nameFileAnswers;
+                        App.game.cargarRespuestas(archivoRespuestas);
+                    }
+                    Path rutaDestino = Path.of(App.pathFiles).resolve(nombreArchivo);
+                    
+                    Files.copy(archivo.toPath(), rutaDestino, StandardCopyOption.REPLACE_EXISTING);
+                    System.out.println("Archivo " + nombreArchivo + " guardado en " + rutaDestino);
+                } catch (IOException e) {
+                    System.err.println("Error al copiar el archivo: " + archivo.getName());
+                    e.printStackTrace();
+                }
             }
         } else {
-            System.out.println("No se seleccionó ningún archivo.");
+            System.out.println("No se seleccionaron archivos.");
         }
+        
+        
         
         App.setRoot("Adivina");
     }

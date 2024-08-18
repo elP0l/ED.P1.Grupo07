@@ -9,7 +9,6 @@ import TDA.NodeBinaryTree;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Stack;
 
 /**
  *
@@ -17,25 +16,25 @@ import java.util.Stack;
  */
 public class Game {
     
-    HashMap<String,String> mapaRespuestas = new HashMap<>();
-    BinaryTree<NodeBinaryTree<Pregunta>> decisionTree;
+    private HashMap<String,String> mapaRespuestas = new HashMap<>();
+    private BinaryTree<Pregunta> decisionTree;
     
     public void cargarArbol(String file){
         
-        Stack<String> pila = Util.leerArchivo(file);
-        if(pila.isEmpty()){
+        Queue<String> cola = Util.leerArchivo(file);
+        if(cola.isEmpty()){
             return;
         }
         
-        String line = pila.pop();
+        String line = cola.poll();
         Pregunta p = new Pregunta(line);
         NodeBinaryTree<Pregunta> nodeRoot = new NodeBinaryTree<>(p);
         decisionTree = new BinaryTree(nodeRoot);
         Queue<NodeBinaryTree<Pregunta>> queue = new LinkedList<>();
         queue.add(nodeRoot);
 
-        while (!pila.isEmpty()) {
-            line = pila.pop();
+        while (!cola.isEmpty()) {
+            line = cola.poll();
             p = new Pregunta(line);
             NodeBinaryTree<Pregunta> nodeQuestion = new NodeBinaryTree<>(p);
 
@@ -54,13 +53,13 @@ public class Game {
     
     public void cargarRespuestas(String file){
         
-        Stack<String> pila = Util.leerArchivo(file);
-        if(pila.isEmpty()){
+        Queue<String> cola = Util.leerArchivo(file);
+        if(cola.isEmpty()){
             return;
         }
         String line = "";
-        while(!pila.isEmpty()){
-            line = pila.pop();
+        while(!cola.isEmpty()){
+            line = cola.poll();
             int pos = line.indexOf(" ");
             String value = line.substring(0,pos);
             String key = line.substring(pos+1);
@@ -71,8 +70,15 @@ public class Game {
     
     public String mostrarPregunta(NodeBinaryTree<Pregunta> node){
         Pregunta p = node.getContent();
-        return p.getPregunta();
+        return p.getPregunta().substring(1);
     }
-    
+
+    public HashMap<String, String> getMapaRespuestas() {
+        return mapaRespuestas;
+    }
+
+    public BinaryTree<Pregunta> getDecisionTree() {
+        return decisionTree;
+    }
     
 }

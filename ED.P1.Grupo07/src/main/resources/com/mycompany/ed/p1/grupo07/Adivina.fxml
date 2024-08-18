@@ -7,21 +7,24 @@
 
 <AnchorPane fx:id="fondo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="396.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed.p1.grupo07.AdivinaController">
    <children>
-      <Button fx:id="btAdd" layoutX="92.0" layoutY="222.0" mnemonicParsing="false" onAction="#agregarArchivo" prefHeight="34.0" prefWidth="96.0" style="-fx-background-color: #ca170f;" text="Si" textFill="WHITE">
+      <Button fx:id="btYes" layoutX="92.0" layoutY="222.0" mnemonicParsing="false" onAction="#opIzq" prefHeight="34.0" prefWidth="96.0" style="-fx-background-color: #ca170f;" text="Si" textFill="WHITE">
          <font>
             <Font name="Tw Cen MT Condensed Extra Bold" size="17.0" />
          </font>
       </Button>
-      <Button layoutX="208.0" layoutY="222.0" mnemonicParsing="false" onAction="#adivinar" prefHeight="34.0" prefWidth="96.0" style="-fx-background-color: #ca170f;" text="No" textFill="WHITE">
+      <Button fx:id="btNo" layoutX="208.0" layoutY="222.0" mnemonicParsing="false" onAction="#opDer" prefHeight="34.0" prefWidth="96.0" style="-fx-background-color: #ca170f;" text="No" textFill="WHITE">
          <font>
             <Font name="Tw Cen MT Condensed Extra Bold" size="17.0" />
          </font>
       </Button>
-      <Label layoutX="75.0" layoutY="64.0" prefHeight="54.0" prefWidth="96.0" text="¿" textFill="#a61717">
+      <Label layoutX="74.0" layoutY="64.0" prefHeight="54.0" prefWidth="96.0" text="¿" textFill="#a61717">
          <font>
             <Font name="Palatino Linotype Italic" size="96.0" />
          </font>
       </Label>
-      <Label layoutX="115.0" layoutY="121.0" maxWidth="200.0" prefHeight="52.0" prefWidth="200.0" text="Label" textFill="#a61717" wrapText="true" />
+      <Label fx:id="lblQuestion" layoutX="115.0" layoutY="101.0" maxWidth="198.0" prefHeight="97.0" prefWidth="198.0" text="Label" textFill="#a61717" wrapText="true">
+         <font>
+            <Font size="30.0" />
+         </font></Label>
    </children>
 </AnchorPane>

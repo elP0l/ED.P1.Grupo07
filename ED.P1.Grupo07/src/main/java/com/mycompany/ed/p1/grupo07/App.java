@@ -13,7 +13,7 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-private static Scene scene;
+    private static Scene scene;
     
     public static String pathFiles = "src/main/resources/files/";
     public static String pathImages = "src/main/resources/images/";
