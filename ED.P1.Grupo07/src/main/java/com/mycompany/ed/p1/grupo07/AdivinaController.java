@@ -41,7 +41,7 @@ public class AdivinaController implements Initializable {
     @FXML
     private Label lblSimbol;
     @FXML
-    public int nivel;
+    public int nivel = 1;
     @FXML
     BinaryTree<Pregunta> bTree = App.game.getDecisionTree();
     @FXML
@@ -52,6 +52,8 @@ public class AdivinaController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        bTree.recorrerPostorden();
+        
         Image gifImage = new Image(getClass().getResourceAsStream("/images/gif3.gif"));
         ImageView imageView = new ImageView(gifImage);
         imageView.setFitWidth(fondo.getWidth());
@@ -65,8 +67,7 @@ public class AdivinaController implements Initializable {
         imageView.toBack(); 
         Musica();
         NodeBinaryTree<Pregunta> node = bTree.getRoot();
-        nivel = bTree.countLevelsRecursive();
-        System.out.println(nivel);
+//        nivel = App.game.cantPreguntas;
         lblQuestion.setText(App.game.mostrarPregunta(node));
         
     }
@@ -82,29 +83,38 @@ public class AdivinaController implements Initializable {
     @FXML
     private void opIzq(ActionEvent event) throws IOException {
         key+="sí ";
-        if((bTree.getRoot().getLeft()==null) || (Integer.valueOf(LimitesController.num)>=nivel)){
-            System.out.println(key);
-            switchToPrimary();
-        }else{
+        System.out.println(nivel);
+        System.out.println(bTree.getRoot().getRight()==null);
+        if((bTree.getRoot().getLeft()!=null) && (nivel<Integer.valueOf(LimitesController.num))){
             Musica();
             bTree = bTree.getRoot().getLeft();
             NodeBinaryTree<Pregunta> node = bTree.getRoot();
             lblQuestion.setText(App.game.mostrarPregunta(node));
+        }else{
+            key = key.trim();
+            System.out.println("NO PUEDE SERRR");
+            switchToPrimary();
+            
         }
+        nivel++;
     }
 
     @FXML
     private void opDer(ActionEvent event) throws IOException {
         key+="no ";
-        if((bTree.getRoot().getRight()==null) || (Integer.valueOf(LimitesController.num)>=nivel)){
-            System.out.println(key);
-            switchToPrimary();
-        }else{
+        System.out.println(nivel);
+        System.out.println(bTree.getRoot().getRight()==null);
+        if((bTree.getRoot().getRight()!=null) && (nivel<Integer.valueOf(LimitesController.num))){
             Musica();
             bTree = bTree.getRoot().getRight();
             NodeBinaryTree<Pregunta> node = bTree.getRoot();
             lblQuestion.setText(App.game.mostrarPregunta(node));
+        }else{
+            key = key.trim();
+            System.out.println(key);
+            switchToPrimary();
         }
+        nivel++;
     }
     private void switchToPrimary() throws IOException {
         App.setRoot("Portal");
@@ -113,5 +123,5 @@ public class AdivinaController implements Initializable {
     private void concluir() throws IOException {
         App.setRoot("Portal");
     }
-    
+
 }
