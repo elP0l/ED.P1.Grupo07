@@ -22,79 +22,31 @@ public class Game {
     
     public void cargarArbol(String file){
         
-//        Queue<String> cola = Util.leerArchivo(file);
-//        if(cola.isEmpty()){
-//            return;
-//        }
-//        
-//        String line = cola.poll();
-//        Pregunta p = new Pregunta(line);
-//        NodeBinaryTree<Pregunta> nodeRoot = new NodeBinaryTree<>(p);
-//        decisionTree = new BinaryTree(nodeRoot);
-//        Queue<NodeBinaryTree<Pregunta>> queue = new LinkedList<>();
-//        queue.add(nodeRoot);
-//
-//        while (!cola.isEmpty()) {
-//            line = cola.poll();
-//            p = new Pregunta(line);
-//            NodeBinaryTree<Pregunta> nodeQuestion = new NodeBinaryTree<>(p);
-//
-//            NodeBinaryTree<Pregunta> currentNode = queue.poll();
-//
-//            if (currentNode.getLeft() == null) {
-//                currentNode.setLeft(new BinaryTree<>(nodeQuestion));
-//                queue.add(nodeQuestion);
-//            }else if (currentNode.getRight() == null) {
-//                currentNode.setRight(new BinaryTree<>(nodeQuestion));
-//                queue.add(nodeQuestion);
-//            }
-//        }
-//        
-        
-          Queue<String> colaPreguntas = Util.leerArchivo(file);
-    if (colaPreguntas.isEmpty()) {
-        return;
-    }
-
-    // Crear la raíz del árbol
-    String preguntaRaiz = colaPreguntas.poll();
-    Pregunta rootPregunta = new Pregunta(preguntaRaiz);
-    NodeBinaryTree<Pregunta> nodoRaiz = new NodeBinaryTree<>(rootPregunta);
-    decisionTree = new BinaryTree<>(nodoRaiz);
-
-    // Usar una cola para mantener el seguimiento de los nodos
-    Queue<NodeBinaryTree<Pregunta>> colaNodos = new LinkedList<>();
-    colaNodos.add(nodoRaiz);
-
-    while (!colaPreguntas.isEmpty()) {
-        int nivelSize = colaNodos.size(); // Número de nodos en el nivel actual
-
-        for (int i = 0; i < nivelSize; i++) {
-            NodeBinaryTree<Pregunta> currentNode = colaNodos.poll();
-
-            // Crear y añadir el hijo izquierdo
-            if (!colaPreguntas.isEmpty()) {
-                String preguntaIzquierda = colaPreguntas.poll();
-                Pregunta izquierdaPregunta = new Pregunta(preguntaIzquierda);
-                NodeBinaryTree<Pregunta> nodoIzquierdo = new NodeBinaryTree<>(izquierdaPregunta);
-                currentNode.setLeft(new BinaryTree<>(nodoIzquierdo));
-                colaNodos.add(nodoIzquierdo);
-            }
-
-            // Crear y añadir el hijo derecho
-            if (!colaPreguntas.isEmpty()) {
-                String preguntaDerecha = colaPreguntas.poll();
-                Pregunta derechaPregunta = new Pregunta(preguntaDerecha);
-                NodeBinaryTree<Pregunta> nodoDerecho = new NodeBinaryTree<>(derechaPregunta);
-                currentNode.setRight(new BinaryTree<>(nodoDerecho));
-                colaNodos.add(nodoDerecho);
+        Queue<String> colaPreguntas = Util.leerArchivo(file);
+        if (colaPreguntas.isEmpty()) {
+            return;
+        }
+        Queue<BinaryTree<Pregunta>> colaTrees = new LinkedList<>();
+        //Raiz
+        NodeBinaryTree<Pregunta> nodoP = new NodeBinaryTree<>(new Pregunta(colaPreguntas.poll()));
+        BinaryTree<Pregunta> root = new BinaryTree<>(nodoP);
+        colaTrees.offer(root);
+        while (!colaPreguntas.isEmpty()){
+            int iteraciones = colaTrees.size();
+            nodoP = new NodeBinaryTree<>(new Pregunta(colaPreguntas.poll()));
+            for(int i=0;i<iteraciones;i++){
+                BinaryTree<Pregunta> arbol = colaTrees.poll();
+                //HIJOS IZQ
+                BinaryTree<Pregunta> subTreeLeft = new BinaryTree<>(nodoP);
+                arbol.getRoot().setLeft(subTreeLeft);
+                colaTrees.add(subTreeLeft);
+                //HIJOS DER
+                BinaryTree<Pregunta> subTreeRight = new BinaryTree<>(nodoP);
+                arbol.getRoot().setRight(subTreeRight);
+                colaTrees.add(subTreeRight);
             }
         }
-    }
-        
-        
-        
-   
+        decisionTree = root;
     }
     
     private void construirArbol(Queue<String> cola, NodeBinaryTree<Pregunta> nodoActual) {
