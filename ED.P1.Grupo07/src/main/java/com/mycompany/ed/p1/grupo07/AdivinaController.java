@@ -106,10 +106,12 @@ public class AdivinaController implements Initializable {
                 System.out.println("Se ha añadido el animal al árbol: " + nombreAnimal);
                 App.anima = nombreAnimal;
                 switchToPrimary();
-            } 
-        }
+            }
+        } 
         nivel++;
     }
+        
+    
     @FXML
     private void opDer(ActionEvent event) throws IOException {
         key+="no ";
@@ -124,7 +126,7 @@ public class AdivinaController implements Initializable {
             key = key.trim();
             List<String> posiblesRespuestas = buscarRespuestasPosibles(key);
             App.animalResultado = posiblesRespuestas;
-            if (posiblesRespuestas.size() > 1 || posiblesRespuestas.size() ==2) {
+            if (posiblesRespuestas.size() > 1) {
             switchToMultipleOptions();
             } else {
                 key = key.trim();

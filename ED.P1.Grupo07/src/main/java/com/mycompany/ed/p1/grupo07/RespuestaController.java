@@ -4,8 +4,10 @@
  */
 package com.mycompany.ed.p1.grupo07;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -51,6 +53,24 @@ public class RespuestaController implements Initializable {
     
      public void mostrarNombreAnimal(String nombreAnimal) {
         resp.setText(nombreAnimal);
+    }
+
+    @FXML
+    private void regre(ActionEvent event) throws IOException {
+        Alert alerta = new Alert(AlertType.INFORMATION);
+        alerta.setTitle("Facilito");
+        alerta.setHeaderText("zzz");
+        alerta.setContentText("Facilito adivinar ");
+        alerta.showAndWait();
+    }
+
+    @FXML
+    private void regre2(ActionEvent event) throws IOException {
+        Alert alerta = new Alert(AlertType.ERROR);
+        alerta.setTitle("Falle");
+        alerta.setHeaderText(":(");
+        alerta.setContentText("No puede ser");
+        alerta.showAndWait();
     }
 }
 

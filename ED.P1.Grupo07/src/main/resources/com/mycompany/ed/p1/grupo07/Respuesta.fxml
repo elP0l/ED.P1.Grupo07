@@ -8,12 +8,12 @@
 
 <AnchorPane id="AnchorPane" fx:id="fond" prefHeight="400.0" prefWidth="396.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed.p1.grupo07.RespuestaController">
    <children>
-      <Button fx:id="correct" layoutX="53.0" layoutY="307.0" mnemonicParsing="false" style="-fx-background-color: #ca170f;" text="Es correcto" textFill="WHITE">
+      <Button fx:id="correct" layoutX="53.0" layoutY="307.0" mnemonicParsing="false" onAction="#regre" style="-fx-background-color: #ca170f;" text="Es correcto" textFill="WHITE">
          <font>
             <Font name="Tw Cen MT Condensed Extra Bold" size="17.0" />
          </font>
       </Button>
-      <Button fx:id="incorrect" layoutX="213.0" layoutY="307.0" mnemonicParsing="false" style="-fx-background-color: #ca170f;" text="Incorrecto" textFill="WHITE">
+      <Button fx:id="incorrect" layoutX="213.0" layoutY="307.0" mnemonicParsing="false" onAction="#regre2" style="-fx-background-color: #ca170f;" text="Incorrecto" textFill="WHITE">
          <font>
             <Font name="Tw Cen MT Condensed Extra Bold" size="17.0" />
          </font>
