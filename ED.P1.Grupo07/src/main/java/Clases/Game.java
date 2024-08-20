@@ -81,6 +81,9 @@ public class Game {
             construirArbol(cola, nodoDerecho);
         }
     }
+    public String obtenerNombreAnimal(String clave) {
+        return mapaRespuestas.get(clave.trim());
+    }
     
     public void cargarRespuestas(String file){
         
@@ -111,5 +114,26 @@ public class Game {
     public BinaryTree<Pregunta> getDecisionTree() {
         return decisionTree;
     }
+    public void imprimirArbol(NodeBinaryTree<Pregunta> root, int nivel) {
+        if (root == null) {
+            return;
+        }
+
+        // Imprime el nivel y la pregunta del nodo actual
+        System.out.println("Nivel " + nivel + ": " + root.getContent().getPregunta());
+
+        // Llamada recursiva para el subárbol izquierdo
+        imprimirArbol(root.getLeft() != null ? root.getLeft().getRoot() : null, nivel + 1);
+
+        // Llamada recursiva para el subárbol derecho
+        imprimirArbol(root.getRight() != null ? root.getRight().getRoot() : null, nivel + 1);
+    }
+
+    // Método para imprimir todo el árbol de decisiones
+    public void imprimirArbolDecision() {
+        imprimirArbol(decisionTree.getRoot(), 0);  // Nivel 0 para la raíz
+    }
     
 }
+    
+

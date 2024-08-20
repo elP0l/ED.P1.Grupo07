@@ -20,6 +20,7 @@ public class App extends Application {
     public static String nameFileQuestions = "preguntas.txt";
     public static String nameFileAnswers = "respuestas.txt";
     public static Game game = new Game();
+    public static String animalResultado;
     
     @Override
     public void start(Stage stage) throws IOException {
@@ -42,13 +43,9 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-//        String archivo="preguntas.txt";
-//        LinkedList<Pregunta> preguntas = new LinkedList<>();
-//        preguntas.add(new Pregunta("¿Es mamifero?"));
-//        preguntas.add(new Pregunta("¿Es carnivoro?"));
-//        preguntas.add(new Pregunta("¿Se para en 4 patas?"));
-//        Pregunta.escribirArchivo(preguntas,archivo);
-//        game.cargarArbol(archivo);
+        Game game = new Game();
+        game.cargarArbol("src/main/resources/files/preguntas.txt");
+        game.imprimirArbolDecision();
         
         launch();
     }

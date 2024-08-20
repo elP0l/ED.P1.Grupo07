@@ -85,16 +85,23 @@ public class AdivinaController implements Initializable {
         key+="sí ";
         System.out.println(nivel);
         System.out.println(bTree.getRoot().getRight()==null);
-        if((bTree.getRoot().getLeft()!=null) && (nivel<Integer.valueOf(LimitesController.num))){
+        if((bTree.getRoot().getLeft()!=null) && (nivel<Integer.parseInt(LimitesController.num))){
             Musica();
             bTree = bTree.getRoot().getLeft();
             NodeBinaryTree<Pregunta> node = bTree.getRoot();
             lblQuestion.setText(App.game.mostrarPregunta(node));
-        }else{
+        } else {
             key = key.trim();
-            System.out.println("NO PUEDE SERRR");
+            String nombreAnimal = App.game.getMapaRespuestas().get(key);
+            if (nombreAnimal == null) {
+                nombreAnimal = "Animal Desconocido"; 
+            }
+            Pregunta animalPregunta = new Pregunta(nombreAnimal);
+            NodeBinaryTree<Pregunta> animalNode = new NodeBinaryTree<>(animalPregunta);
+            bTree.getRoot().setLeft(new BinaryTree<>(animalNode));
+            System.out.println("Se ha añadido el animal al árbol: " + nombreAnimal);
+            App.animalResultado = nombreAnimal;
             switchToPrimary();
-            
         }
         nivel++;
     }
@@ -110,14 +117,22 @@ public class AdivinaController implements Initializable {
             NodeBinaryTree<Pregunta> node = bTree.getRoot();
             lblQuestion.setText(App.game.mostrarPregunta(node));
         }else{
-            key = key.trim();
-            System.out.println(key);
+           key = key.trim();
+            String nombreAnimal = App.game.getMapaRespuestas().get(key);
+            if (nombreAnimal == null) {
+                nombreAnimal = "Animal Desconocido"; 
+            }
+            Pregunta animalPregunta = new Pregunta(nombreAnimal);
+            NodeBinaryTree<Pregunta> animalNode = new NodeBinaryTree<>(animalPregunta);
+            bTree.getRoot().setLeft(new BinaryTree<>(animalNode));
+            System.out.println("Se ha añadido el animal al árbol: " + nombreAnimal);
+            App.animalResultado = nombreAnimal;
             switchToPrimary();
         }
         nivel++;
     }
     private void switchToPrimary() throws IOException {
-        App.setRoot("Portal");
+        App.setRoot("Respuesta");
     }
     
     private void concluir() throws IOException {
