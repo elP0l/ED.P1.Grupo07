@@ -40,7 +40,7 @@ public class RespuestaController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       String nombreAnimal = App.animalResultado;
+       String nombreAnimal = App.anima;
         if (nombreAnimal != null) {
             resp.setText(nombreAnimal);
         } else {

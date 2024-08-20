@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" fx:id="fond" prefHeight="400.0" prefWidth="396.0" style="-fx-background-color: black;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.mycompany.ed.p1.grupo07.RespuestaController">
+<AnchorPane id="AnchorPane" fx:id="fond" prefHeight="400.0" prefWidth="396.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed.p1.grupo07.RespuestaController">
    <children>
       <Button fx:id="correct" layoutX="53.0" layoutY="307.0" mnemonicParsing="false" style="-fx-background-color: #ca170f;" text="Es correcto" textFill="WHITE">
          <font>
@@ -19,9 +18,9 @@
             <Font name="Tw Cen MT Condensed Extra Bold" size="17.0" />
          </font>
       </Button>
-      <Label fx:id="resp" layoutX="119.0" layoutY="75.0" prefHeight="36.0" prefWidth="137.0" textFill="#a61717">
+      <Label fx:id="resp" layoutX="87.0" layoutY="74.0" prefHeight="61.0" prefWidth="238.0" textFill="WHITE">
          <font>
-            <Font size="30.0" />
+            <Font name="Tw Cen MT Condensed Extra Bold" size="27.0" />
          </font>
       </Label>
       <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="98.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />

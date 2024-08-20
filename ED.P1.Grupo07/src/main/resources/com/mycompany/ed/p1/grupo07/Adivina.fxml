@@ -17,12 +17,12 @@
             <Font name="Tw Cen MT Condensed Extra Bold" size="17.0" />
          </font>
       </Button>
-      <Label layoutX="74.0" layoutY="64.0" prefHeight="54.0" prefWidth="96.0" text="¿" textFill="#a61717">
+      <Label layoutX="75.0" layoutY="55.0" prefHeight="54.0" prefWidth="96.0" text="¿" textFill="#a61717">
          <font>
             <Font name="Palatino Linotype Italic" size="96.0" />
          </font>
       </Label>
-      <Label fx:id="lblQuestion" layoutX="115.0" layoutY="101.0" maxWidth="198.0" prefHeight="97.0" prefWidth="198.0" text="Label" textFill="#a61717" wrapText="true">
+      <Label fx:id="lblQuestion" layoutX="123.0" layoutY="76.0" maxWidth="229.0" prefHeight="123.0" prefWidth="229.0" text="Label" textFill="#a61717" wrapText="true">
          <font>
             <Font size="30.0" />
          </font></Label>

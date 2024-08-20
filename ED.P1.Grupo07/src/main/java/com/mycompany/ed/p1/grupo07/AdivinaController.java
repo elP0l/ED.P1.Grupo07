@@ -8,6 +8,9 @@ import Clases.Pregunta;
 import TDA.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -38,13 +41,8 @@ public class AdivinaController implements Initializable {
     private AnchorPane fondo;
     @FXML
     private Label lblQuestion;
-    @FXML
-    private Label lblSimbol;
-    @FXML
     public int nivel = 1;
-    @FXML
     BinaryTree<Pregunta> bTree = App.game.getDecisionTree();
-    @FXML
     String key = "";
 
     /**
@@ -90,22 +88,28 @@ public class AdivinaController implements Initializable {
             bTree = bTree.getRoot().getLeft();
             NodeBinaryTree<Pregunta> node = bTree.getRoot();
             lblQuestion.setText(App.game.mostrarPregunta(node));
-        } else {
+         } else {
             key = key.trim();
-            String nombreAnimal = App.game.getMapaRespuestas().get(key);
-            if (nombreAnimal == null) {
-                nombreAnimal = "Animal Desconocido"; 
-            }
-            Pregunta animalPregunta = new Pregunta(nombreAnimal);
-            NodeBinaryTree<Pregunta> animalNode = new NodeBinaryTree<>(animalPregunta);
-            bTree.getRoot().setLeft(new BinaryTree<>(animalNode));
-            System.out.println("Se ha añadido el animal al árbol: " + nombreAnimal);
-            App.animalResultado = nombreAnimal;
-            switchToPrimary();
+            List<String> posiblesRespuestas = buscarRespuestasPosibles(key);
+            App.animalResultado = posiblesRespuestas;
+            if (posiblesRespuestas.size() > 1) {
+            switchToMultipleOptions();
+            } else {
+                key = key.trim();
+                String nombreAnimal = App.game.getMapaRespuestas().get(key);
+                if (nombreAnimal == null) {
+                    nombreAnimal = "Animal Desconocido"; 
+                }
+                Pregunta animalPregunta = new Pregunta(nombreAnimal);
+                NodeBinaryTree<Pregunta> animalNode = new NodeBinaryTree<>(animalPregunta);
+                bTree.getRoot().setLeft(new BinaryTree<>(animalNode));
+                System.out.println("Se ha añadido el animal al árbol: " + nombreAnimal);
+                App.anima = nombreAnimal;
+                switchToPrimary();
+            } 
         }
         nivel++;
     }
-
     @FXML
     private void opDer(ActionEvent event) throws IOException {
         key+="no ";
@@ -116,27 +120,43 @@ public class AdivinaController implements Initializable {
             bTree = bTree.getRoot().getRight();
             NodeBinaryTree<Pregunta> node = bTree.getRoot();
             lblQuestion.setText(App.game.mostrarPregunta(node));
-        }else{
-           key = key.trim();
-            String nombreAnimal = App.game.getMapaRespuestas().get(key);
-            if (nombreAnimal == null) {
-                nombreAnimal = "Animal Desconocido"; 
-            }
-            Pregunta animalPregunta = new Pregunta(nombreAnimal);
-            NodeBinaryTree<Pregunta> animalNode = new NodeBinaryTree<>(animalPregunta);
-            bTree.getRoot().setLeft(new BinaryTree<>(animalNode));
-            System.out.println("Se ha añadido el animal al árbol: " + nombreAnimal);
-            App.animalResultado = nombreAnimal;
-            switchToPrimary();
+        } else {
+            key = key.trim();
+            List<String> posiblesRespuestas = buscarRespuestasPosibles(key);
+            App.animalResultado = posiblesRespuestas;
+            if (posiblesRespuestas.size() > 1 || posiblesRespuestas.size() ==2) {
+            switchToMultipleOptions();
+            } else {
+                key = key.trim();
+                String nombreAnimal = App.game.getMapaRespuestas().get(key);
+                if (nombreAnimal == null) {
+                    nombreAnimal = "Animal Desconocido"; 
+                }
+                Pregunta animalPregunta = new Pregunta(nombreAnimal);
+                NodeBinaryTree<Pregunta> animalNode = new NodeBinaryTree<>(animalPregunta);
+                bTree.getRoot().setLeft(new BinaryTree<>(animalNode));
+                System.out.println("Se ha añadido el animal al árbol: " + nombreAnimal);
+                App.anima = nombreAnimal;
+                switchToPrimary();
+            } 
         }
         nivel++;
+    }
+    private void switchToMultipleOptions() throws IOException {
+        App.setRoot("Multiple");
+    }
+    private List<String> buscarRespuestasPosibles(String pattern) {
+        List<String> resultados = new ArrayList<>();
+        for (HashMap.Entry<String, String> entry : App.game.getMapaRespuestas().entrySet()) {
+            if (entry.getKey().startsWith(pattern)) {
+                resultados.add(entry.getValue());
+            }
+        }
+        return resultados;
     }
     private void switchToPrimary() throws IOException {
         App.setRoot("Respuesta");
     }
-    
-    private void concluir() throws IOException {
-        App.setRoot("Portal");
-    }
+  
 
 }

@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * JavaFX App
@@ -20,7 +21,8 @@ public class App extends Application {
     public static String nameFileQuestions = "preguntas.txt";
     public static String nameFileAnswers = "respuestas.txt";
     public static Game game = new Game();
-    public static String animalResultado;
+    public static List<String> animalResultado;
+    public static String anima;
     
     @Override
     public void start(Stage stage) throws IOException {

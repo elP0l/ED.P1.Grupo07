@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="396.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed.p1.grupo07.MultipleController">
+   <children>
+      <Button fx:id="ok" layoutX="167.0" layoutY="323.0" mnemonicParsing="false" onAction="#regresar" prefHeight="31.0" prefWidth="63.0" style="-fx-background-color: #ca170f;" text="ok" textFill="#fffdfd">
+         <font>
+            <Font name="Tw Cen MT Condensed Extra Bold" size="17.0" />
+         </font>
+      </Button>
+      <Label fx:id="opciones" layoutX="56.0" layoutY="53.0" prefHeight="191.0" prefWidth="285.0" textFill="WHITE">
+         <font>
+            <Font name="Tw Cen MT Condensed Extra Bold" size="17.0" />
+         </font></Label>
+   </children>
+</AnchorPane>
