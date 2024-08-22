@@ -4,6 +4,8 @@
  */
 package TDA;
 
+import Clases.Pregunta;
+import Clases.Util;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
@@ -493,7 +495,99 @@ public class BinaryTree <E> {
         final BinaryTree<?> other = (BinaryTree<?>) obj;
         return Objects.equals(this.root, other.root);
     }
+
+    public void insertarRespuestas(String filename) {
+        Queue<String> cola = Util.leerArchivo(filename);
+        if (cola.isEmpty()) {
+            return;
+        }
+        while (!cola.isEmpty()) {
+            String linea = cola.poll();
+            String[] partes = linea.split(" ");
+            String animal = partes[0];
+            NodeBinaryTree<Pregunta> pregunta_actual = (NodeBinaryTree<Pregunta>) this.root;
+
+            // Procesar cada respuesta para llegar al nodo adecuado
+            for (int i = 1; i < partes.length; i++) {
+                String respuesta = partes[i];
+                pregunta_actual = navegarArbol(respuesta, pregunta_actual, animal, i == partes.length - 1);
+            }
+        }
+    }
+
+    public NodeBinaryTree<Pregunta> navegarArbol(String respuesta, NodeBinaryTree<Pregunta> actual, String animal, boolean esUltimaRespuesta) {
+        // Verifica si la respuesta es 'sí' o 'no'
+        if ("sí".equalsIgnoreCase(respuesta)) {
+            if (actual.getLeft() == null) {
+                // Crear un nuevo nodo para la pregunta si no existe
+                if (esUltimaRespuesta) {
+                    // Si es la última respuesta, crea un nodo con el animal
+                    NodeBinaryTree<Pregunta> nuevoNodo = new NodeBinaryTree<>(new Pregunta(animal));
+                    actual.setLeft(new BinaryTree<>(nuevoNodo));
+                    return nuevoNodo;
+                } else {
+                    // Crear un nuevo nodo de pregunta
+                    NodeBinaryTree<Pregunta> nuevoNodo = new NodeBinaryTree<>(new Pregunta("¿Pregunta?"));
+                    actual.setLeft(new BinaryTree<>(nuevoNodo));
+                    return nuevoNodo;
+                }
+            } else {
+                return actual.getLeft().getRoot();
+            }
+        } else if ("no".equalsIgnoreCase(respuesta)) {
+            if (actual.getRight() == null) {
+                // Crear un nuevo nodo para la pregunta si no existe
+                if (esUltimaRespuesta) {
+                    // Si es la última respuesta, crea un nodo con el animal
+                    NodeBinaryTree<Pregunta> nuevoNodo = new NodeBinaryTree<>(new Pregunta(animal));
+                    actual.setRight(new BinaryTree<>(nuevoNodo));
+                    return nuevoNodo;
+                } else {
+                    // Crear un nuevo nodo de pregunta
+                    NodeBinaryTree<Pregunta> nuevoNodo = new NodeBinaryTree<>(new Pregunta("¿Pregunta?"));
+                    actual.setRight(new BinaryTree<>(nuevoNodo));
+                    return nuevoNodo;
+                }
+            } else {
+                return actual.getRight().getRoot();
+            }
+        } else {
+            throw new IllegalArgumentException("Respuesta inválida. Use 'sí' o 'no'.");
+        }
+    }
+
     
-    
+    public void printTree() {
+        if (this.isEmpty()) {
+            System.out.println("El árbol está vacío.");
+        } else {
+            printTree(root, "", true);
+        }
+    }
+
+    private void printTree(NodeBinaryTree<E> node, String indent, boolean last) {
+        if (node != null) {
+            System.out.print(indent);
+            if (last) {
+                System.out.print("-");
+                indent += "    ";
+            } else {
+                System.out.print("- ");
+                indent += "| ";
+            }
+            System.out.println(node.getContent());
+
+            // Imprimir el hijo derecho y luego el hijo izquierdo
+            if (node.getRight() != null) {
+                printTree(node.getRight().getRoot(), indent, false);
+            } else if (node.getLeft() != null) {
+                // Si hay hijo izquierdo pero no derecho, aún imprimir el hijo izquierdo
+                printTree(null, indent, false);
+            }
+            if (node.getLeft() != null) {
+                printTree(node.getLeft().getRoot(), indent, true);
+            }
+        }
+    }
     
 }

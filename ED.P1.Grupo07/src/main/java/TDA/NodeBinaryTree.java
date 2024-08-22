@@ -42,7 +42,4 @@ public class NodeBinaryTree<E> {
     public void setRight(BinaryTree<E> right) {
         this.right = right;
     }
-    
-    
-    
 }

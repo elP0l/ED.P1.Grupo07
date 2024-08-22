@@ -8,11 +8,12 @@ import TDA.BinaryTree;
 import TDA.NodeBinaryTree;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
  *
- * @author José Marin
+ * @author Grupo 7
  */
 public class Game {
     
@@ -20,73 +21,58 @@ public class Game {
     private HashMap<String,String> mapaRespuestas = new HashMap<>();
     private BinaryTree<Pregunta> decisionTree;
     
-    public void cargarArbol(String file){
-        
+    public void cargarArbol(String file) {
         Queue<String> colaPreguntas = Util.leerArchivo(file);
         if (colaPreguntas.isEmpty()) {
             return;
         }
+
         Queue<BinaryTree<Pregunta>> colaTrees = new LinkedList<>();
-        //Raiz
+
+        // Raiz (nivel 0, k=0)
         NodeBinaryTree<Pregunta> nodoP = new NodeBinaryTree<>(new Pregunta(colaPreguntas.poll()));
         BinaryTree<Pregunta> root = new BinaryTree<>(nodoP);
         colaTrees.offer(root);
-        while (!colaPreguntas.isEmpty()){
-            int iteraciones = colaTrees.size();
-            nodoP = new NodeBinaryTree<>(new Pregunta(colaPreguntas.poll()));
-            for(int i=0;i<iteraciones;i++){
-                BinaryTree<Pregunta> arbol = colaTrees.poll();
-                //HIJOS IZQ
-                BinaryTree<Pregunta> subTreeLeft = new BinaryTree<>(nodoP);
-                arbol.getRoot().setLeft(subTreeLeft);
-                colaTrees.add(subTreeLeft);
-                //HIJOS DER
-                BinaryTree<Pregunta> subTreeRight = new BinaryTree<>(nodoP);
-                arbol.getRoot().setRight(subTreeRight);
-                colaTrees.add(subTreeRight);
+
+        int nivel = 1; // Inicia desde el nivel 1
+
+        while (!colaPreguntas.isEmpty()) {
+            int iteraciones = (int) Math.pow(2, nivel); // 2^k, donde k = nivel actual
+
+            // Crear los nodos de la pregunta actual
+            NodeBinaryTree<Pregunta>[] nodosActuales = new NodeBinaryTree[iteraciones];
+            String preguntaActual = colaPreguntas.poll();
+
+            for (int i = 0; i < iteraciones; i++) {
+                nodosActuales[i] = new NodeBinaryTree<>(new Pregunta(preguntaActual));
             }
+
+            for (int i = 0; i < iteraciones / 2; i++) {
+                BinaryTree<Pregunta> arbol = colaTrees.poll();
+
+                // Asignar los nodos como hijos izquierdo y derecho
+                BinaryTree<Pregunta> subTreeLeft = new BinaryTree<>(nodosActuales[2 * i]);
+                arbol.getRoot().setLeft(subTreeLeft);
+                colaTrees.offer(subTreeLeft);
+
+                BinaryTree<Pregunta> subTreeRight = new BinaryTree<>(nodosActuales[2 * i + 1]);
+                arbol.getRoot().setRight(subTreeRight);
+                colaTrees.offer(subTreeRight);
+            }
+
+            nivel++;
         }
+
         decisionTree = root;
     }
+
     
-    private void construirArbol(Queue<String> cola, NodeBinaryTree<Pregunta> nodoActual) {
-        if (cola.isEmpty()) {
-            return;
-        }
-
-        // Crear nodos hijos si no están ya creados
-        if (nodoActual.getLeft() == null) {
-            // Extraer la pregunta para el hijo izquierdo
-            String preguntaIzquierda = cola.poll();
-            Pregunta izquierdaPregunta = new Pregunta(preguntaIzquierda);
-            NodeBinaryTree<Pregunta> nodoIzquierdo = new NodeBinaryTree<>(izquierdaPregunta);
-
-            // Asignar el nodo hijo izquierdo
-            nodoActual.setLeft(new BinaryTree<>(nodoIzquierdo));
-
-            // Llamada recursiva para seguir construyendo el árbol en el hijo izquierdo
-            construirArbol(cola, nodoIzquierdo);
-        }
-
-        if (!cola.isEmpty() && nodoActual.getRight() == null) {
-            // Extraer la pregunta para el hijo derecho
-            String preguntaDerecha = cola.poll();
-            Pregunta derechaPregunta = new Pregunta(preguntaDerecha);
-            NodeBinaryTree<Pregunta> nodoDerecho = new NodeBinaryTree<>(derechaPregunta);
-
-            // Asignar el nodo hijo derecho
-            nodoActual.setRight(new BinaryTree<>(nodoDerecho));
-
-            // Llamada recursiva para seguir construyendo el árbol en el hijo derecho
-            construirArbol(cola, nodoDerecho);
-        }
-    }
     public String obtenerNombreAnimal(String clave) {
         return mapaRespuestas.get(clave.trim());
     }
     
     public void cargarRespuestas(String file){
-        
+        decisionTree.insertarRespuestas(file);
         Queue<String> cola = Util.leerArchivo(file);
         if(cola.isEmpty()){
             return;
@@ -99,7 +85,7 @@ public class Game {
             String key = line.substring(pos+1);
             mapaRespuestas.put(key, value);    
         }
-        
+        imprimirArbolDecision();
     }
     
     public String mostrarPregunta(NodeBinaryTree<Pregunta> node){
@@ -114,6 +100,7 @@ public class Game {
     public BinaryTree<Pregunta> getDecisionTree() {
         return decisionTree;
     }
+    
     public void imprimirArbol(NodeBinaryTree<Pregunta> root, int nivel) {
         if (root == null) {
             return;
@@ -134,6 +121,31 @@ public class Game {
         imprimirArbol(decisionTree.getRoot(), 0);  // Nivel 0 para la raíz
     }
     
+    public String encontrarAnimal(List<String> respuestas) {
+        NodeBinaryTree<Pregunta> nodoActual = decisionTree.getRoot();
+
+        for (String respuesta : respuestas) {
+            if (respuesta.equals("sí")) {
+                if (nodoActual.getLeft() != null) {
+                    nodoActual = nodoActual.getLeft().getRoot();
+                } else {
+                    return "No se encontró el animal, llegó a un nodo sin hijos en el lado izquierdo.";
+                }
+            } else if (respuesta.equals("no")) {
+                if (nodoActual.getRight() != null) {
+                    nodoActual = nodoActual.getRight().getRoot();
+                } else {
+                    return "No se encontró el animal, llegó a un nodo sin hijos en el lado derecho.";
+                }
+            } else {
+                return "Respuesta inválida. Use 'sí' o 'no'.";
+            }
+        }
+
+        // El contenido del nodo actual debería ser el animal
+        Pregunta preguntaActual = nodoActual.getContent();
+        return preguntaActual.getPregunta();
+    }
 }
     
 

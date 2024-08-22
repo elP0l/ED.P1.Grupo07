@@ -62,6 +62,7 @@ public class RespuestaController implements Initializable {
         alerta.setHeaderText("zzz");
         alerta.setContentText("Facilito adivinar ");
         alerta.showAndWait();
+        App.setRoot("Portal");
     }
 
     @FXML
@@ -71,6 +72,7 @@ public class RespuestaController implements Initializable {
         alerta.setHeaderText(":(");
         alerta.setContentText("No puede ser");
         alerta.showAndWait();
+        App.setRoot("Portal");
     }
 }
 

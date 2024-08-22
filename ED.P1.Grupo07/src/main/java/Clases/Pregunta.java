@@ -26,5 +26,8 @@ public class Pregunta {
         this.pregunta = pregunta;
     }
     
-    
+    @Override
+    public String toString() {
+        return pregunta;
+    }
 }

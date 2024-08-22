@@ -17,13 +17,17 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -44,12 +48,15 @@ public class AdivinaController implements Initializable {
     public int nivel = 1;
     BinaryTree<Pregunta> bTree = App.game.getDecisionTree();
     String key = "";
-
+    private List<String> respuestas;
+    private Stage popupStage;
+    private ListView<String> listView;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        respuestas = new ArrayList<>();
         bTree.recorrerPostorden();
         
         Image gifImage = new Image(getClass().getResourceAsStream("/images/gif3.gif"));
@@ -65,7 +72,6 @@ public class AdivinaController implements Initializable {
         imageView.toBack(); 
         Musica();
         NodeBinaryTree<Pregunta> node = bTree.getRoot();
-//        nivel = App.game.cantPreguntas;
         lblQuestion.setText(App.game.mostrarPregunta(node));
         
     }
@@ -78,75 +84,64 @@ public class AdivinaController implements Initializable {
         timeline.setCycleCount(1); 
         timeline.play();
     }
+    
     @FXML
     private void opIzq(ActionEvent event) throws IOException {
-        key+="sí ";
-        System.out.println(nivel);
-        System.out.println(bTree.getRoot().getRight()==null);
-        if((bTree.getRoot().getLeft()!=null) && (nivel<Integer.parseInt(LimitesController.num))){
+        key += "sí ";
+        respuestas.add("sí");
+
+        if (bTree.getRoot().getLeft() != null && nivel < Integer.parseInt(LimitesController.num)) {
             Musica();
             bTree = bTree.getRoot().getLeft();
             NodeBinaryTree<Pregunta> node = bTree.getRoot();
             lblQuestion.setText(App.game.mostrarPregunta(node));
-         } else {
-            key = key.trim();
-            List<String> posiblesRespuestas = buscarRespuestasPosibles(key);
-            App.animalResultado = posiblesRespuestas;
-            if (posiblesRespuestas.size() > 1) {
-            switchToMultipleOptions();
-            } else {
-                key = key.trim();
-                String nombreAnimal = App.game.getMapaRespuestas().get(key);
-                if (nombreAnimal == null) {
-                    nombreAnimal = "Animal Desconocido"; 
-                }
-                Pregunta animalPregunta = new Pregunta(nombreAnimal);
-                NodeBinaryTree<Pregunta> animalNode = new NodeBinaryTree<>(animalPregunta);
-                bTree.getRoot().setLeft(new BinaryTree<>(animalNode));
-                System.out.println("Se ha añadido el animal al árbol: " + nombreAnimal);
-                App.anima = nombreAnimal;
-                switchToPrimary();
-            }
-        } 
+        } else {
+            manejarRespuesta();
+        }
+
+        actualizarPopup();
         nivel++;
     }
-        
-    
+
     @FXML
     private void opDer(ActionEvent event) throws IOException {
-        key+="no ";
-        System.out.println(nivel);
-        System.out.println(bTree.getRoot().getRight()==null);
-        if((bTree.getRoot().getRight()!=null) && (nivel<Integer.valueOf(LimitesController.num))){
+        key += "no ";
+        respuestas.add("no");
+
+        if (bTree.getRoot().getRight() != null && nivel < Integer.parseInt(LimitesController.num)) {
             Musica();
             bTree = bTree.getRoot().getRight();
             NodeBinaryTree<Pregunta> node = bTree.getRoot();
             lblQuestion.setText(App.game.mostrarPregunta(node));
         } else {
-            key = key.trim();
-            List<String> posiblesRespuestas = buscarRespuestasPosibles(key);
-            App.animalResultado = posiblesRespuestas;
-            if (posiblesRespuestas.size() > 1) {
-            switchToMultipleOptions();
-            } else {
-                key = key.trim();
-                String nombreAnimal = App.game.getMapaRespuestas().get(key);
-                if (nombreAnimal == null) {
-                    nombreAnimal = "Animal Desconocido"; 
-                }
-                Pregunta animalPregunta = new Pregunta(nombreAnimal);
-                NodeBinaryTree<Pregunta> animalNode = new NodeBinaryTree<>(animalPregunta);
-                bTree.getRoot().setLeft(new BinaryTree<>(animalNode));
-                System.out.println("Se ha añadido el animal al árbol: " + nombreAnimal);
-                App.anima = nombreAnimal;
-                switchToPrimary();
-            } 
+            manejarRespuesta();
         }
+
+        actualizarPopup();
         nivel++;
     }
-    private void switchToMultipleOptions() throws IOException {
-        App.setRoot("Multiple");
+
+    private void manejarRespuesta() throws IOException {
+        key = key.trim();
+        List<String> posiblesRespuestas = buscarRespuestasPosibles(key);
+
+        if (posiblesRespuestas.size() > 1) {
+            if (nivel >= Integer.parseInt(LimitesController.num)) {
+                App.animalResultado = posiblesRespuestas;
+                switchToMultipleOptions();
+            } else {
+                App.animalResultado = posiblesRespuestas;
+                switchToMultipleOptions();
+            }
+        } else if (posiblesRespuestas.size() == 1) {
+            App.anima = posiblesRespuestas.get(0);
+            switchToPrimary();
+        } else {
+            App.anima = "Animal Desconocido";
+            switchToPrimary();
+        }
     }
+
     private List<String> buscarRespuestasPosibles(String pattern) {
         List<String> resultados = new ArrayList<>();
         for (HashMap.Entry<String, String> entry : App.game.getMapaRespuestas().entrySet()) {
@@ -156,9 +151,32 @@ public class AdivinaController implements Initializable {
         }
         return resultados;
     }
+
+    private void switchToMultipleOptions() throws IOException {
+        App.setRoot("Multiple");
+    }
+
     private void switchToPrimary() throws IOException {
         App.setRoot("Respuesta");
     }
-  
 
+    private void actualizarPopup() {
+        if (popupStage == null || !popupStage.isShowing()) {
+            // Crear una nueva ventana emergente
+            popupStage = new Stage();
+            listView = new ListView<>();
+
+            // Crear VBox para contener ListView
+            VBox vbox = new VBox(listView);
+            Scene scene = new Scene(vbox, 300, 400);
+
+            popupStage.setScene(scene);
+            popupStage.setTitle("Respuestas Posibles");
+            popupStage.show();
+        }
+
+        // Actualizar la lista de respuestas en la ventana emergente
+        List<String> posiblesRespuestas = buscarRespuestasPosibles(key);
+        listView.getItems().setAll(posiblesRespuestas);
+    }
 }
